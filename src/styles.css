@@ -1,0 +1,431 @@
+:root {
+    /* Modern Color Palette */
+    --bg-color: #f0f2f5;
+    --card-bg: #ffffff;
+    --primary: #6366f1; /* Indigo */
+    --primary-hover: #4f46e5;
+    --text-dark: #1f2937;
+    --text-muted: #6b7280;
+    --border-color: #e5e7eb;
+    --danger: #ef4444;
+    --success: #10b981;
+    --focus-ring: rgba(99, 102, 241, 0.3);
+
+    /* Spacing */
+    --radius: 12px;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Inter", sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-dark);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* --- Layout Wrappers --- */
+.app-wrapper {
+    width: 100%;
+    max-width: 480px;
+    padding: var(--spacing-md);
+}
+
+.card {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+        0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    max-height: 85vh;
+}
+
+/* --- Header & Search --- */
+.card-header {
+    padding: 1.5rem;
+    background: var(--card-bg);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.app-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--text-dark);
+}
+
+.filter-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.search-group {
+    position: relative;
+    width: 100%;
+}
+
+.search-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+}
+
+#name {
+    width: 100%;
+    padding: 0.6rem 1rem 0.6rem 2.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+    outline: none;
+}
+
+#name:focus,
+#todo-input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--focus-ring);
+}
+
+/* --- Toggle Switch for Hide Completed --- */
+.toggle-control {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    user-select: none;
+}
+
+.toggle-control input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggle-track {
+    width: 36px;
+    height: 20px;
+    background-color: #d1d5db;
+    border-radius: 20px;
+    position: relative;
+    margin-right: 8px;
+    transition: background-color 0.2s;
+}
+
+.toggle-indicator {
+    content: "";
+    position: absolute;
+    height: 16px;
+    width: 16px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    border-radius: 50%;
+    transition: transform 0.2s;
+}
+
+.toggle-control input:checked + .toggle-track {
+    background-color: var(--primary);
+}
+
+.toggle-control input:checked + .toggle-track .toggle-indicator {
+    transform: translateX(16px);
+}
+
+/* --- List Styles --- */
+.list-container {
+    overflow-y: auto;
+    flex-grow: 1;
+}
+
+#list {
+    list-style: none;
+}
+
+.list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    transition: background-color 0.15s;
+}
+
+.list-item:hover {
+    background-color: #f9fafb;
+}
+
+.list-item:last-child {
+    border-bottom: none;
+}
+
+.list-item-label {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    flex: 1;
+}
+
+/* --- Custom Checkbox --- */
+[data-list-item-checkbox] {
+    appearance: none;
+    /* Hide default but keep accessible */
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.custom-checkbox {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #d1d5db;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    flex-shrink: 0;
+}
+
+/* Checked State */
+[data-list-item-checkbox]:checked + .custom-checkbox {
+    background-color: var(--success);
+    border-color: var(--success);
+}
+
+/* Checkmark Icon via pseudo-element */
+.custom-checkbox::after {
+    content: "";
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg) scale(0);
+    margin-bottom: 2px;
+    transition: transform 0.2s ease-in-out;
+}
+
+[data-list-item-checkbox]:checked + .custom-checkbox::after {
+    transform: rotate(45deg) scale(1);
+}
+
+/* Text Strikethrough */
+[data-list-item-text] {
+    font-size: 0.95rem;
+    color: var(--text-dark);
+    transition: color 0.2s;
+}
+
+[data-list-item-checkbox]:checked ~ [data-list-item-text] {
+    text-decoration: line-through;
+    color: #9ca3af;
+}
+
+/* --- Buttons --- */
+.action-buttons {
+    display: flex;
+    gap: 0.5rem;
+    opacity: 0.6; /* Subtle by default */
+    transition: opacity 0.2s;
+}
+
+.list-item:hover .action-buttons {
+    opacity: 1;
+}
+
+button {
+    cursor: pointer;
+    font-family: inherit;
+    border: none;
+    background: none;
+}
+
+.btn-icon {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: all 0.2s;
+    background-color: #f3f4f6;
+}
+
+.btn-icon:hover {
+    background-color: #e5e7eb;
+    color: var(--text-dark);
+}
+
+.btn-icon.danger:hover {
+    background-color: #fee2e2;
+    color: var(--danger);
+}
+
+.btn-secondary.danger:hover {
+    background-color: #fee2e2;
+    color: var(--danger);
+}
+
+/* --- New Todo Form --- */
+#new-todo-form {
+    padding: 1.5rem;
+    background-color: #f9fafb;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    gap: 0.75rem;
+}
+
+#todo-input {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    outline: none;
+    font-size: 0.95rem;
+    transition: all 0.2s;
+}
+
+.btn-primary {
+    background-color: var(--primary);
+    color: white;
+    padding: 0 1.25rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: background-color 0.2s;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-hover);
+}
+
+/* --- New CSS for the Modal UI --- */
+
+.modal-overlay {
+    /* Hides the modal by default */
+    display: none;
+
+    /* Full screen coverage */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    /* Semi-transparent background */
+    background-color: rgba(0, 0, 0, 0.5);
+
+    /* Center the content */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Ensure it's on top */
+
+    /* Smooth transition for fading in */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* 🔑 CSS :target hack to show the modal without JS 🔑 */
+.modal-overlay:target {
+    display: flex;
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    transform: translateY(-50px);
+    transition: transform 0.3s ease;
+}
+
+.modal-overlay:target .modal-content {
+    transform: translateY(0);
+}
+
+.modal-header {
+    padding: 1rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.modal-header h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.modal-close-btn {
+    font-size: 1.5rem;
+    text-decoration: none;
+    color: var(--text-muted);
+    line-height: 1;
+    transition: color 0.2s;
+}
+
+.modal-close-btn:hover {
+    color: var(--text-dark);
+}
+
+.modal-body {
+    padding: 1.5rem;
+}
+
+.modal-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    outline: none;
+    font-size: 0.95rem;
+    transition: all 0.2s;
+}
+
+.modal-input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--focus-ring);
+}
+
+.modal-footer {
+    padding: 1rem 1.5rem;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+}
+
+.btn-secondary {
+    background-color: #f3f4f6;
+    color: var(--text-dark);
+    padding: 0.75rem 1.25rem;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+    border: 1px solid var(--border-color);
+}
+
+.btn-secondary:hover {
+    background-color: #e5e7eb;
+}
