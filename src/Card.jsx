@@ -11,13 +11,18 @@ export const TodoActionsContext = createContext();
 export function Card() {
     const [newTodoName, setNewTodoName] = useState("");
     const [searchInput, setSearchInput] = useState("");
+    const [hideDone, setHideDone] = useState(false);
 
     const [todos, setTodos] = useLocalStorage(STORAGE_KEY.TODOS_KEY, []);
 
     const searchedTodos =
         searchInput === ""
             ? todos
-            : todos.filter((todo) => todo.name.includes(searchInput));
+            : todos.filter((todo) => (todo.name).toLowerCase().includes(searchInput.toLowerCase()));
+
+    const notFinishedTodos = !hideDone
+        ? searchedTodos
+        : searchedTodos.filter((todo) => !todo.completed);
 
     function addNewTodo(e) {
         e.preventDefault();
@@ -58,9 +63,11 @@ export function Card() {
             <CardHeader
                 searchInput={searchInput}
                 setSearchInput={setSearchInput}
+                hideDone={hideDone}
+                setHideDone={setHideDone}
             />
             <TodoActionsContext value={{ toggleTodo, deleteTodo }}>
-                <List todos={searchedTodos} />
+                <List todos={notFinishedTodos} />
             </TodoActionsContext>
 
             <TodoForm

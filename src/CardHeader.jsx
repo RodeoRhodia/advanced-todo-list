@@ -1,4 +1,4 @@
-export function CardHeader({ searchInput, setSearchInput }) {
+export function CardHeader({ searchInput, setSearchInput, hideDone, setHideDone }) {
     return (
         <header className="card-header">
             <h1 className="app-title">My Tasks</h1>
@@ -29,7 +29,7 @@ export function CardHeader({ searchInput, setSearchInput }) {
                 </div>
 
                 <label className="toggle-control">
-                    <input type="checkbox" />
+                    <input type="checkbox" checked={hideDone} onChange={(e) => setHideDone(e.target.checked)}/>
                     <span className="toggle-track">
                         <span className="toggle-indicator"></span>
                     </span>
