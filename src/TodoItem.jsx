@@ -2,8 +2,8 @@ import { useContext } from "react";
 import { TodoActionsContext } from "./Card";
 
 export function TodoItem({ id, name, completed }) {
-    const { toggleTodo, deleteTodo } = useContext(TodoActionsContext);
-    
+    const { toggleTodo, deleteTodo, openEditModal } = useContext(TodoActionsContext);
+
     return (
         <li className="list-item">
             <label className="list-item-label">
@@ -17,7 +17,7 @@ export function TodoItem({ id, name, completed }) {
                 <span data-list-item-text>{name}</span>
             </label>
             <div className="action-buttons">
-            <button href="#edit-modal" data-button-edit className="btn-icon">Edit</button>
+            <button data-button-edit className="btn-icon" onClick={() => openEditModal()}>Edit</button>
                 <button className="btn-icon danger" onClick={() => deleteTodo(id)} data-button-delete>
                     Delete
                 </button>

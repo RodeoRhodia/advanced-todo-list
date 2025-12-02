@@ -291,7 +291,7 @@ button {
 
 #todo-input {
     flex: 1;
-    padding: 0.75rem 5rem 0.75rem 1rem;
+    padding: 0.75rem 4.75rem 0.75rem 1rem;
     border: 1px solid var(--border-color);
     border-radius: 8px;
     outline: none;
@@ -342,11 +342,13 @@ button {
 }
 
 /* 🔑 CSS :target hack to show the modal without JS 🔑 */
-.modal-overlay:target {
+.modal-overlay:target,
+.modal-overlay.open {
     display: flex;
     opacity: 1;
     visibility: visible;
 }
+
 
 .modal-content {
     background: var(--card-bg);
@@ -359,7 +361,8 @@ button {
     transition: transform 0.3s ease;
 }
 
-.modal-overlay:target .modal-content {
+.modal-overlay:target .modal-content,
+.modal-overlay.open .modal-content {
     transform: translateY(0);
 }
 
