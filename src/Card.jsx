@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { CardHeader } from "./CardHeader";
 import { List } from "./List";
 import { TodoForm } from "./TodoForm";
@@ -10,8 +10,14 @@ export const TodoActionsContext = createContext();
 
 export function Card() {
     const [newTodoName, setNewTodoName] = useState("");
+    const [searchInput, setSearchInput] = useState("");
 
     const [todos, setTodos] = useLocalStorage(STORAGE_KEY.TODOS_KEY, []);
+
+    const searchedTodos =
+        searchInput === ""
+            ? todos
+            : todos.filter((todo) => todo.name.includes(searchInput));
 
     function addNewTodo(e) {
         e.preventDefault();
@@ -49,11 +55,12 @@ export function Card() {
 
     return (
         <div className="card">
-            <CardHeader />
+            <CardHeader
+                searchInput={searchInput}
+                setSearchInput={setSearchInput}
+            />
             <TodoActionsContext value={{ toggleTodo, deleteTodo }}>
-                <List
-                    todos={todos}
-                />
+                <List todos={searchedTodos} />
             </TodoActionsContext>
 
             <TodoForm

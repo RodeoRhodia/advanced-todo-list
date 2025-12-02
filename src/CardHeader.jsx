@@ -1,4 +1,4 @@
-export function CardHeader() {
+export function CardHeader({ searchInput, setSearchInput }) {
     return (
         <header className="card-header">
             <h1 className="app-title">My Tasks</h1>
@@ -23,6 +23,8 @@ export function CardHeader() {
                         type="text"
                         id="name"
                         placeholder="Search tasks..."
+                        value={searchInput}
+                        onChange={(e) => setSearchInput(e.target.value)}
                     />
                 </div>
 
