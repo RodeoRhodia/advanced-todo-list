@@ -23,13 +23,14 @@ export function CardHeader({ searchInput, setSearchInput, hideDone, setHideDone 
                         type="text"
                         id="name"
                         placeholder="Search tasks..."
+                        autoComplete="on"
                         value={searchInput}
                         onChange={(e) => setSearchInput(e.target.value)}
                     />
                 </div>
 
                 <label className="toggle-control">
-                    <input type="checkbox" checked={hideDone} onChange={(e) => setHideDone(e.target.checked)}/>
+                    <input id="hide-done" type="checkbox" checked={hideDone} onChange={(e) => setHideDone(e.target.checked)}/>
                     <span className="toggle-track">
                         <span className="toggle-indicator"></span>
                     </span>
