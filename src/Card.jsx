@@ -1,5 +1,7 @@
 import { useState } from "react";
-import { TodoItem } from "./TodoItem";
+import { CardHeader } from "./CardHeader";
+import { List } from "./List";
+import { TodoForm } from "./TodoForm";
 
 export function Card() {
     const [newTodoName, setNewTodoName] = useState("");
@@ -38,30 +40,10 @@ export function Card() {
     }
 
     return (
-        <>
-            <ul id="list">
-                {todos.map((todo) => {
-                    return (
-                        <TodoItem
-                            key={todo.id}
-                            {...todo}
-                            toggleTodo={toggleTodo}
-                            deleteTodo={deleteTodo}
-                        />
-                    );
-                })}
-            </ul>
-
-            <div id="new-todo-form">
-                <label htmlFor="todo-input">New Todo</label>
-                <input
-                    type="text"
-                    id="todo-input"
-                    value={newTodoName}
-                    onChange={(e) => setNewTodoName(e.target.value)}
-                />
-                <button onClick={addNewTodo}>Add Todo</button>
-            </div>
-        </>
+        <div className="card">
+            <CardHeader />
+            <List todos={todos} toggleTodo={toggleTodo} deleteTodo={deleteTodo}/>
+            <TodoForm newTodoName={newTodoName} setNewTodoName={setNewTodoName} addNewTodo={addNewTodo} />
+        </div>
     );
 }
