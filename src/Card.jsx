@@ -2,14 +2,18 @@ import { useState } from "react";
 import { CardHeader } from "./CardHeader";
 import { List } from "./List";
 import { TodoForm } from "./TodoForm";
+import { useLocalStorage } from "./hooks/useLocalStorage";
+
+const STORAGE_KEY = { TODOS_KEY: "TODOS_KEY" };
 
 export function Card() {
     const [newTodoName, setNewTodoName] = useState("");
-    const [todos, setTodos] = useState([]);
+
+    const [todos, setTodos] = useLocalStorage(STORAGE_KEY.TODOS_KEY, []);
 
     function addNewTodo(e) {
         e.preventDefault();
-        
+
         if (newTodoName === "") return;
 
         setTodos((currentTodos) => {
@@ -44,8 +48,16 @@ export function Card() {
     return (
         <div className="card">
             <CardHeader />
-            <List todos={todos} toggleTodo={toggleTodo} deleteTodo={deleteTodo}/>
-            <TodoForm newTodoName={newTodoName} setNewTodoName={setNewTodoName} addNewTodo={addNewTodo} />
+            <List
+                todos={todos}
+                toggleTodo={toggleTodo}
+                deleteTodo={deleteTodo}
+            />
+            <TodoForm
+                newTodoName={newTodoName}
+                setNewTodoName={setNewTodoName}
+                addNewTodo={addNewTodo}
+            />
         </div>
     );
 }
