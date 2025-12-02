@@ -7,7 +7,9 @@ export function Card() {
     const [newTodoName, setNewTodoName] = useState("");
     const [todos, setTodos] = useState([]);
 
-    function addNewTodo() {
+    function addNewTodo(e) {
+        e.preventDefault();
+        
         if (newTodoName === "") return;
 
         setTodos((currentTodos) => {
