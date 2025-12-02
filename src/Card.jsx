@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { createContext, useState } from "react";
 import { CardHeader } from "./CardHeader";
 import { List } from "./List";
 import { TodoForm } from "./TodoForm";
 import { useLocalStorage } from "./hooks/useLocalStorage";
 
 const STORAGE_KEY = { TODOS_KEY: "TODOS_KEY" };
+
+export const TodoActionsContext = createContext();
 
 export function Card() {
     const [newTodoName, setNewTodoName] = useState("");
@@ -48,11 +50,12 @@ export function Card() {
     return (
         <div className="card">
             <CardHeader />
-            <List
-                todos={todos}
-                toggleTodo={toggleTodo}
-                deleteTodo={deleteTodo}
-            />
+            <TodoActionsContext value={{ toggleTodo, deleteTodo }}>
+                <List
+                    todos={todos}
+                />
+            </TodoActionsContext>
+
             <TodoForm
                 newTodoName={newTodoName}
                 setNewTodoName={setNewTodoName}

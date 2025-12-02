@@ -1,6 +1,6 @@
 import { TodoItem } from "./TodoItem";
 
-export function List({ todos, toggleTodo, deleteTodo }) {
+export function List({ todos }) {
     return (
         <div className="list-container">
             <ul id="list">
@@ -9,8 +9,6 @@ export function List({ todos, toggleTodo, deleteTodo }) {
                         <TodoItem
                             key={todo.id}
                             {...todo}
-                            toggleTodo={toggleTodo}
-                            deleteTodo={deleteTodo}
                         />
                     );
                 })}
