@@ -15,6 +15,11 @@ export function Card() {
     const [hideDone, setHideDone] = useState(false);
     const [isEditMode, setIsEditMode] = useState(false);
 
+    const [selectedTodoToEdit, setSelectedTodoToEdit] = useState({
+        id: "",
+        name: "",
+    });
+
     const [todos, setTodos] = useLocalStorage(STORAGE_KEY.TODOS_KEY, []);
 
     const searchedTodos =
@@ -62,12 +67,22 @@ export function Card() {
         });
     }
 
-    function openEditModal() {
+    function editTodo(todoId, newName) {
+        setTodos((currentTodos) => {
+            return currentTodos.map((todo) =>
+                todo.id === todoId ? { ...todo, name: newName } : todo
+            );
+        });
+    }
+
+    function openEditModal(id, name) {
         setIsEditMode(true);
+        setSelectedTodoToEdit({ id, name });
     }
 
     function closeEditModal() {
         setIsEditMode(false);
+        setSelectedTodoToEdit({ id: "", name: "" });
     }
 
     return (
@@ -78,7 +93,9 @@ export function Card() {
                 hideDone={hideDone}
                 setHideDone={setHideDone}
             />
-            <TodoActionsContext value={{ toggleTodo, deleteTodo, openEditModal }}>
+            <TodoActionsContext
+                value={{ toggleTodo, deleteTodo, openEditModal }}
+            >
                 <List todos={notFinishedTodos} />
             </TodoActionsContext>
 
@@ -88,7 +105,14 @@ export function Card() {
                 addNewTodo={addNewTodo}
             />
 
-            <Modal isEditMode={isEditMode} closeEditModal={closeEditModal}/>
+            <TodoActionsContext value={{ deleteTodo, editTodo }}>
+                <Modal
+                    isEditMode={isEditMode}
+                    closeEditModal={closeEditModal}
+                    selectedTodoToEdit={selectedTodoToEdit}
+                    setSelectedTodoToEdit={setSelectedTodoToEdit}
+                />
+            </TodoActionsContext>
         </div>
     );
 }
