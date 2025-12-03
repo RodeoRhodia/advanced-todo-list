@@ -349,7 +349,6 @@ button {
     visibility: visible;
 }
 
-
 .modal-content {
     background: var(--card-bg);
     border-radius: var(--radius);
@@ -431,4 +430,25 @@ button {
 
 .btn-secondary:hover {
     background-color: #e5e7eb;
+}
+
+/* --- Footer Credit Styling --- */
+.footer-credit {
+    position: absolute; /* Position relative to the body */
+    bottom: 50px; /* Adjust distance from the bottom */
+    left: 50%;
+    transform: translateX(-50%); /* Center horizontally */
+    font-size: 0.85rem;
+    color: var(--text-muted); /* Use a muted color for subtlety */
+    padding-top: 1rem; /* Add some space above it if needed */
+}
+
+.footer-credit a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.footer-credit a:hover {
+    text-decoration: underline;
 }
