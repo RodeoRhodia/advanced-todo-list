@@ -93,18 +93,11 @@ export function Card() {
                 hideDone={hideDone}
                 setHideDone={setHideDone}
             />
-            <TodoActionsContext
-                value={{ toggleTodo, deleteTodo, openEditModal }}
-            >
-                <List todos={notFinishedTodos} />
-            </TodoActionsContext>
-
             <TodoForm
                 newTodoName={newTodoName}
                 setNewTodoName={setNewTodoName}
                 addNewTodo={addNewTodo}
             />
-
             <TodoActionsContext value={{ deleteTodo, editTodo }}>
                 <Modal
                     isEditMode={isEditMode}
@@ -112,6 +105,11 @@ export function Card() {
                     selectedTodoToEdit={selectedTodoToEdit}
                     setSelectedTodoToEdit={setSelectedTodoToEdit}
                 />
+            </TodoActionsContext>{" "}
+            <TodoActionsContext
+                value={{ toggleTodo, deleteTodo, openEditModal }}
+            >
+                <List todos={notFinishedTodos} />
             </TodoActionsContext>
         </div>
     );
