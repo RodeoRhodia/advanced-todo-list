@@ -307,6 +307,7 @@ button {
     font-weight: 600;
     font-size: 0.9rem;
     transition: background-color 0.2s;
+    white-space: nowrap;
 }
 
 .btn-primary:hover {
@@ -435,7 +436,7 @@ button {
 /* --- Footer Credit Styling --- */
 .footer-credit {
     position: absolute; /* Position relative to the body */
-    bottom: 50px; /* Adjust distance from the bottom */
+    bottom: 20px; /* Adjust distance from the bottom */
     left: 50%;
     transform: translateX(-50%); /* Center horizontally */
     font-size: 0.85rem;
